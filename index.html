@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EarthLauncher - Minecraft Java for Mobile</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Catppuccin Macchiato (Dark) */
+            --dark-rosewater: #f4dbd6;
+            --dark-flamingo: #f0c6c6;
+            --dark-pink: #f5bde6;
+            --dark-mauve: #c6a0f6;
+            --dark-red: #ed8796;
+            --dark-maroon: #ee99a0;
+            --dark-peach: #f5a97f;
+            --dark-yellow: #eed49f;
+            --dark-green: #a6da95;
+            --dark-teal: #8bd5ca;
+            --dark-sky: #91d7e3;
+            --dark-sapphire: #7dc4e4;
+            --dark-blue: #8aadf4;
+            --dark-lavender: #b7bdf8;
+            --dark-text: #cad3f5;
+            --dark-subtext1: #b8c0e0;
+            --dark-subtext0: #a5adcb;
+            --dark-overlay2: #939ab7;
+            --dark-overlay1: #8087a2;
+            --dark-overlay0: #6e738d;
+            --dark-surface2: #5b6078;
+            --dark-surface1: #494d64;
+            --dark-surface0: #363a4f;
+            --dark-base: #24273a;
+            --dark-mantle: #1e2030;
+            --dark-crust: #181926;
+
+            /* Catppuccin Latte (Light) */
+            --light-rosewater: #dc8a78;
+            --light-flamingo: #dd7878;
+            --light-pink: #ea76cb;
+            --light-mauve: #8839ef;
+            --light-red: #d20f39;
+            --light-maroon: #e64553;
+            --light-peach: #fe640b;
+            --light-yellow: #df8e1d;
+            --light-green: #40a02b;
+            --light-teal: #179299;
+            --light-sky: #04a5e5;
+            --light-sapphire: #209fb5;
+            --light-blue: #1e66f5;
+            --light-lavender: #7287fd;
+            --light-text: #4c4f69;
+            --light-subtext1: #5c5f77;
+            --light-subtext0: #6c6f85;
+            --light-overlay2: #7c7f93;
+            --light-overlay1: #8c8fa1;
+            --light-overlay0: #9ca0b0;
+            --light-surface2: #acb0be;
+            --light-surface1: #bcc0cc;
+            --light-surface0: #ccd0da;
+            --light-base: #eff1f5;
+            --light-mantle: #e6e9ef;
+            --light-crust: #dce0e8;
+
+            /* Initial theme setup (dark mode by default) */
+            --rosewater: var(--dark-rosewater);
+            --flamingo: var(--dark-flamingo);
+            --pink: var(--dark-pink);
+            --mauve: var(--dark-mauve);
+            --red: var(--dark-red);
+            --maroon: var(--dark-maroon);
+            --peach: var(--dark-peach);
+            --yellow: var(--dark-yellow);
+            --green: var(--dark-green);
+            --teal: var(--dark-teal);
+            --sky: var(--dark-sky);
+            --sapphire: var(--dark-sapphire);
+            --blue: var(--dark-blue);
+            --lavender: var(--dark-lavender);
+            --text: var(--dark-text);
+            --subtext1: var(--dark-subtext1);
+            --subtext0: var(--dark-subtext0);
+            --overlay2: var(--dark-overlay2);
+            --overlay1: var(--dark-overlay1);
+            --overlay0: var(--dark-overlay0);
+            --surface2: var(--dark-surface2);
+            --surface1: var(--dark-surface1);
+            --surface0: var(--dark-surface0);
+            --base: var(--dark-base);
+            --mantle: var(--dark-mantle);
+            --crust: var(--dark-crust);
+
+            /* Font */
+            --font-primary: 'Tajawal', sans-serif;
+
+            /* Transitions */
+            --transition-slow: 0.5s ease;
+            --transition-fast: 0.3s ease;
+        }
+
+        /* Light theme */
+        [data-theme="light"] {
+            --rosewater: var(--light-rosewater);
+            --flamingo: var(--light-flamingo);
+            --pink: var(--light-pink);
+            --mauve: var(--light-mauve);
+            --red: var(--light-red);
+            --maroon: var(--light-maroon);
+            --peach: var(--light-peach);
+            --yellow: var(--light-yellow);
+            --green: var(--light-green);
+            --teal: var(--light-teal);
+            --sky: var(--light-sky);
+            --sapphire: var(--light-sapphire);
+            --blue: var(--light-blue);
+            --lavender: var(--light-lavender);
+            --text: var(--light-text);
+            --subtext1: var(--light-subtext1);
+            --subtext0: var(--light-subtext0);
+            --overlay2: var(--light-overlay2);
+            --overlay1: var(--light-overlay1);
+            --overlay0: var(--light-overlay0);
+            --surface2: var(--light-surface2);
+            --surface1: var(--light-surface1);
+            --surface0: var(--light-surface0);
+            --base: var(--light-base);
+            --mantle: var(--light-mantle);
+            --crust: var(--light-crust);
+        }
+
+        /* RTL support for Arabic */
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color var(--transition-slow), color var(--transition-slow);
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--base);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--transition-slow), color var(--transition-slow);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--lavender);
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--mauve);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Header and Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: var(--mantle);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--lavender);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        [dir="rtl"] .logo i {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--mauve);
+            transition: width var(--transition-fast);
+        }
+
+        [dir="rtl"] .nav-links a:after {
+            left: auto;
+            right: 0;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle, .lang-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--surface0);
+            transition: background-color var(--transition-fast);
+        }
+
+        .theme-toggle:hover, .lang-toggle:hover {
+            background-color: var(--surface1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, var(--mauve) 0%, transparent 50%);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: perspective(800px) rotateY(-10deg);
+            transition: transform var(--transition-fast);
+        }
+
+        .hero-image img:hover {
+            transform: perspective(800px) rotateY(0);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--subtext1);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        [dir="rtl"] .btn i {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--surface0);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--surface1);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            background-color: var(--mantle);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--lavender);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--surface0);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .feature-desc {
+            color: var(--subtext1);
+        }
+
+        /* How to Use Section */
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .step-desc {
+            color: var(--subtext1);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--mantle);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--surface0);
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--subtext1);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--surface1);
+            margin-right: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--mauve);
+        }
+
+        [dir="rtl"] .author-avatar {
+            margin-right: 0;
+            margin-left: 15px;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .author-role {
+            font-size: 0.9rem;
+            color: var(--subtext0);
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: var(--surface0);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background-color: var(--surface1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-fast), padding var(--transition-fast);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 300px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--crust);
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--lavender);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--subtext1);
+        }
+
+        .footer-links a:hover {
+            color: var(--mauve);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--surface0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            background-color: var(--mauve);
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--surface0);
+            color: var(--subtext1);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Particle effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+            opacity: 0.3;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100vw) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text, .hero-image {
+                width: 100%;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            [dir="rtl"] .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .feature-card, .testimonial-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-globe"></i>
+                <span data-lang="en">EarthLauncher</span>
+                <span data-lang="ar" style="display: none;">EarthLauncher</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#" data-lang="en">Home</a><span data-lang="ar" style="display: none;">الرئيسية</span></li>
+                <li><a href="#features" data-lang="en">Features</a><span data-lang="ar" style="display: none;">الميزات</span></li>
+                <li><a href="#how-to-use" data-lang="en">How to Use</a><span data-lang="ar" style="display: none;">كيفية الاستخدام</span></li>
+                <li><a href="#testimonials" data-lang="en">Testimonials</a><span data-lang="ar" style="display: none;">آراء المستخدمين</span></li>
+                <li><a href="#faq" data-lang="en">FAQ</a><span data-lang="ar" style="display: none;">الأسئلة الشائعة</span></li>
+            </ul>
+            
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="lang-toggle" id="lang-toggle">
+                    <i class="fas fa-language"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text animate">
+                <h1 data-lang="en">Minecraft Java Edition on Your Mobile</h1>
+                <h1 data-lang="ar" style="display: none;">إصدار Java لماينكرافت على هاتفك المحمول</h1>
+                <p data-lang="en">Experience the full power of Minecraft Java Edition on your mobile device with EarthLauncher. High FPS, smooth performance, and complete customization.</p>
+                <p data-lang="ar" style="display: none;">جرب القوة الكاملة لإصدار Java لماينكرافت على جهازك المحمول مع EarthLauncher. إطارات في الثانية عالية، أداء سلس، وتخصيص كامل.</p>
+                <div class="hero-buttons">
+                    <a href="https://earthlauncher.com/download" class="btn btn-primary" target="_blank">
+                        <i class="fas fa-download"></i>
+                        <span data-lang="en">Download APK</span>
+                        <span data-lang="ar" style="display: none;">تحميل APK</span>
+                    </a>
+                    <a href="https://discord.gg/H8KzNWWZpW" class="btn btn-secondary" target="_blank">
+                        <i class="fab fa-discord"></i>
+                        <span data-lang="en">Join Discord</span>
+                        <span data-lang="ar" style="display: none;">انضم إلى ديسكورد</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image animate">
+                <img src="https://placehold.co/600x400/24273a/cad3f5?text=EarthLauncher" alt="EarthLauncher App" id="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title animate" data-lang="en">Amazing Features</h2>
+            <h2 class="section-title animate" data-lang="ar" style="display: none;">ميزات مذهلة</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3 class="feature-title" data-lang="en">High FPS (999+)</h3>
+                    <h3 class="feature-title" data-lang="ar" style="display: none;">إطارات عالية (999+)</h3>
+                    <p class="feature-desc" data-lang="en">Experience buttery smooth gameplay with incredibly high frame rates.</p>
+                    <p class="feature-desc" data-lang="ar" style="display: none;">جرب gameplay سلس بشكل رائع مع معدلات إطارات عالية بشكل لا يصدق.</p>
+                </div>
+                
+                <div class="feature-card animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="feature-title" data-lang="en">Smooth Performance</h3>
+                    <h3 class="feature-title" data-lang="ar" style="display: none;">أداء سلس</h3>
+                    <p class="feature-desc" data-lang="en">Optimized for mobile devices to deliver the best Minecraft experience.</p>
+                    <p class="feature-desc" data-lang="ar" style="display: none;">تم تحسينه للأجهزة المحمولة لتقديم أفضل تجربة ماينكرافت.</p>
+                </div>
+                
+                <div class="feature-card animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="feature-title" data-lang="en">Fully Customizable</h3>
+                    <h3 class="feature-title" data-lang="ar" style="display: none;">قابل للتخصيص بالكامل</h3>
+                    <p class="feature-desc" data-lang="en">Customize your Minecraft experience with skins, mods, and texture packs.</p>
+                    <p class="feature-desc" data-lang="ar" style="display: none;">خصص تجربة ماينكرافت الخاصة بك مع السكن، الإضافات، وحزم القوام.</p>
+                </div>
+                
+                <div class="feature-card animate">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="feature-title" data-lang="en">Mod Support</h3>
+                    <h3 class="feature-title" data-lang="ar" style="display: none;">دعم الإضافات</h3>
+                    <p class="feature-desc" data-lang="en">Install and use your favorite mods directly from your mobile device.</p>
+                    <p class="feature-desc" data-lang="ar" style="display: none;">ثبّت واستخدم الإضافات المفضلة لديك مباشرة من جهازك المحمول.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use" id="how-to-use">
+        <div class="container">
+            <h2 class="section-title animate" data-lang="en">How to Use</h2>
+            <h2 class="section-title animate" data-lang="ar" style="display: none;">كيفية الاستخدام</h2>
+            
+            <div class="steps">
+                <div class="step animate">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title" data-lang="en">Download</h3>
+                    <h3 class="step-title" data-lang="ar" style="display: none;">تحميل</h3>
+                    <p class="step-desc" data-lang="en">Download the EarthLauncher APK from our official website.</p>
+                    <p class="step-desc" data-lang="ar" style="display: none;">قم بتحميل EarthLauncher APK من موقعنا الرسمي.</p>
+                </div>
+                
+                <div class="step animate">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title" data-lang="en">Install</h3>
+                    <h3 class="step-title" data-lang="ar" style="display: none;">تثبيت</h3>
+                    <p class="step-desc" data-lang="en">Install the APK on your Android device.</p>
+                    <p class="step-desc" data-lang="ar" style="display: none;">ثبّت APK على جهاز الأندرويد الخاص بك.</p>
+                </div>
+                
+                <div class="step animate">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title" data-lang="en">Play</h3>
+                    <h3 class="step-title" data-lang="ar" style="display: none;">لعب</h3>
+                    <p class="step-desc" data-lang="en">Launch the app, configure your settings, and start playing!</p>
+                    <p class="step-desc" data-lang="ar" style="display: none;">شغّل التطبيق، اضبط إعداداتك، وابدأ اللعب!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title animate" data-lang="en">What Users Say</h2>
+            <h2 class="section-title animate" data-lang="ar" style="display: none;">ما يقوله المستخدمون</h2>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate">
+                    <p class="testimonial-text" data-lang="en">"EarthLauncher completely changed how I play Minecraft. Now I can enjoy Java Edition anywhere!"</p>
+                    <p class="testimonial-text" data-lang="ar" style="display: none;">"غير EarthLauncher طريقة لعب ماينكرافت completamente. الآن يمكنني الاستمتاع بإصدار Java في أي مكان!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="author-name">Ahmed</div>
+                            <div class="author-role" data-lang="en">Minecraft Player</div>
+                            <div class="author-role" data-lang="ar" style="display: none;">لاعب ماينكرافت</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card animate">
+                    <p class="testimonial-text" data-lang="en">"The performance is incredible. I'm getting 120+ FPS on my phone with shaders!"</p>
+                    <p class="testimonial-text" data-lang="ar" style="display: none;">"الأداء لا يصدق. أحصل على 120+ FPS على هاتفي مع shaders!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="author-name">Sarah</div>
+                            <div class="author-role" data-lang="en">Content Creator</div>
+                            <div class="author-role" data-lang="ar" style="display: none;">صانع محتوى</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card animate">
+                    <p class="testimonial-text" data-lang="en">"Finally a mobile launcher that supports mods properly. This is a game changer!"</p>
+                    <p class="testimonial-text" data-lang="ar" style="display: none;">"أخيرًا مشغل محمول يدعم الإضافات بشكل صحيح. هذا يغير قواعد اللعبة!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="author-name">John</div>
+                            <div class="author-role" data-lang="en">Mod Developer</div>
+                            <div class="author-role" data-lang="ar" style="display: none;">مطور الإضافات</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title animate" data-lang="en">Frequently Asked Questions</h2>
+            <h2 class="section-title animate" data-lang="ar" style="display: none;">الأسئلة الشائعة</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item animate">
+                    <div class="faq-question">
+                        <span data-lang="en">What devices are supported?</span>
+                        <span data-lang="ar" style="display: none;">ما هي الأجهزة المدعومة؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-lang="en">EarthLauncher supports Android devices with version 7.0 or higher. Devices with at least 2GB of RAM are recommended for optimal performance.</p>
+                        <p data-lang="ar" style="display: none;">يدعم EarthLauncher أجهزة الأندرويد بالإصدار 7.0 أو أعلى. يوصى بأجهزة بها 2GB RAM على الأقل لأداء مثالي.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item animate">
+                    <div class="faq-question">
+                        <span data-lang="en">Is EarthLauncher free to use?</span>
+                        <span data-lang="ar" style="display: none;">هل EarthLauncher مجاني؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-lang="en">Yes, EarthLauncher is completely free to download and use. We may offer premium features in the future, but the core functionality will always remain free.</p>
+                        <p data-lang="ar" style="display: none;">نعم، EarthLauncher مجاني completamente للتحميل والاستخدام. قد نقدم ميزات مميزة في المستقبل، ولكن الوظائف الأساسية ستبقى دائمًا مجانية.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item animate">
+                    <div class="faq-question">
+                        <span data-lang="en">Can I use my existing Minecraft account?</span>
+                        <span data-lang="ar" style="display: none;">هل يمكنني استخدام حساب ماينكرافت الحالي؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-lang="en">Yes, you can use your existing Minecraft Java Edition account to play on EarthLauncher.</p>
+                        <p data-lang="ar" style="display: none;">نعم، يمكنك استخدام حساب Java Edition الحالي للعب على EarthLauncher.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item animate">
+                    <div class="faq-question">
+                        <span data-lang="en">How often is EarthLauncher updated?</span>
+                        <span data-lang="ar" style="display: none;">كم مرة يتم تحديث EarthLauncher؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-lang="en">We regularly update EarthLauncher to ensure compatibility with the latest Minecraft versions and to add new features. Updates are typically released every 2-4 weeks.</p>
+                        <p data-lang="ar" style="display: none;">نقوم بتحديث EarthLauncher بانتظام لضمان التوافق مع أحدث إصدارات ماينكرافت وإضافة ميزات جديدة. يتم إصدار التحديثات عادة كل 2-4 أسابيع.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <h2 class="section-title animate" data-lang="en">Download EarthLauncher</h2>
+            <h2 class="section-title animate" data-lang="ar" style="display: none;">تحميل EarthLauncher</h2>
+            
+            <div class="download-content animate" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p data-lang="en">Get the latest version of EarthLauncher and start playing Minecraft Java Edition on your mobile device today!</p>
+                <p data-lang="ar" style="display: none;">احصل على أحدث إصدار من EarthLauncher وابدأ لعب Java Edition لماينكرافت على جهازك المحمول اليوم!</p>
+                
+                <a href="https://earthlauncher.com/download" class="btn btn-primary" style="margin: 30px 0;" target="_blank">
+                    <i class="fas fa-download"></i>
+                    <span data-lang="en">Download APK (v1.2.5)</span>
+                    <span data-lang="ar" style="display: none;">تحميل APK (v1.2.5)</span>
+                </a>
+                
+                <div class="download-info">
+                    <p data-lang="en">File size: 220 MB | Requirements: Android 7.0+</p>
+                    <p data-lang="ar" style="display: none;">حجم الملف: 220 ميجابايت | المتطلبات: أندرويد 7.0+</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3 data-lang="en">EarthLauncher</h3>
+                    <h3 data-lang="ar" style="display: none;">EarthLauncher</h3>
+                    <p data-lang="en">The best way to play Minecraft Java Edition on mobile devices.</p>
+                    <p data-lang="ar" style="display: none;">أفضل طريقة للعب Java Edition لماينكرافت على الأجهزة المحمولة.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://discord.gg/H8KzNWWZpW" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-lang="en">Links</h3>
+                    <h3 data-lang="ar" style="display: none;">روابط</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-lang="en">Home</a><span data-lang="ar" style="display: none;">الرئيسية</span></li>
+                        <li><a href="#features" data-lang="en">Features</a><span data-lang="ar" style="display: none;">الميزات</span></li>
+                        <li><a href="#how-to-use" data-lang="en">How to Use</a><span data-lang="ar" style="display: none;">كيفية الاستخدام</span></li>
+                        <li><a href="#download" data-lang="en">Download</a><span data-lang="ar" style="display: none;">تحميل</span></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-lang="en">Support</h3>
+                    <h3 data-lang="ar" style="display: none;">الدعم</h3>
+                    <ul class="footer-links">
+                        <li><a href="#faq" data-lang="en">FAQ</a><span data-lang="ar" style="display: none;">الأسئلة الشائعة</span></li>
+                        <li><a href="https://discord.gg/H8KzNWWZpW" data-lang="en">Discord</a><span data-lang="ar" style="display: none;">ديسكورد</span></li>
+                        <li><a href="#" data-lang="en">Contact Us</a><span data-lang="ar" style="display: none;">اتصل بنا</span></li>
+                        <li><a href="#" data-lang="en">Report Issue</a><span data-lang="ar" style="display: none;">الإبلاغ عن مشكلة</span></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-lang="en">Legal</h3>
+                    <h3 data-lang="ar" style="display: none;">قانوني</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-lang="en">Privacy Policy</a><span data-lang="ar" style="display: none;">سياسة الخصوصية</span></li>
+                        <li><a href="#" data-lang="en">Terms of Service</a><span data-lang="ar" style="display: none;">شروط الخدمة</span></li>
+                        <li><a href="#" data-lang="en">Disclaimer</a><span data-lang="ar" style="display: none;">إخلاء المسؤولية</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p data-lang="en">&copy; 2023 EarthLauncher. Not affiliated with Mojang or Microsoft.</p>
+                <p data-lang="ar" style="display: none;">&copy; 2023 EarthLauncher. غير تابع لـ Mojang أو Microsoft.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        // Language Toggle
+        const langToggle = document.getElementById('lang-toggle');
+        let currentLang = 'en';
+        
+        langToggle.addEventListener('click', () => {
+            const newLang = currentLang === 'en' ? 'ar' : 'en';
+            changeLanguage(newLang);
+        });
+        
+        function changeLanguage(lang) {
+            // Update all elements with data-lang attributes
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                if (element.getAttribute('data-lang') === lang) {
+                    element.style.display = '';
+                } else {
+                    element.style.display = 'none';
+                }
+            });
+            
+            // Update direction
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', lang);
+            
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+        }
+        
+        // Check for saved language preference
+        const savedLang = localStorage.getItem('language') || 'en';
+        changeLanguage(savedLang);
+        
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+                
+                const icon = question.querySelector('i');
+                icon.className = item.classList.contains('active') ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+            });
+        });
+        
+        // Scroll Animations
+        function checkScroll() {
+            const elements = document.querySelectorAll('.animate');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom > 0);
+                
+                if (isVisible) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.style.display === 'flex') {
+                        navLinks.style.display = 'none';
+                    }
+                }
+            });
+        });
+        
+        // Particle Effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDelay = `-${Math.random() * 20}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        // APK Download Handling - Redirect to official website
+        document.querySelectorAll('a[href="#download"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open('https://earthlauncher.com/download', '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
